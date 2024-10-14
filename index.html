@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Consulta ao Banco de Dados</title>
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
+    <style>
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+      }
+
+      th,
+      td {
+        padding: 10px;
+        text-align: left;
+        border: 1px solid #ddd;
+      }
+
+      th {
+        background-color: #f2f2f2;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Consultar Dados</h1>
+    <form method="POST" action="/consultar">
+      <label for="nationality">Nacionalidade:</label>
+      <input type="text" id="nationality" name="nationality" placeholder="Nacionalidade">
+      <br>
+      <label for="age">Idade:</label>
+      <input type="number" id="age" name="age" placeholder="Idade">
+      <br>
+      <label for="active">Ativos:</label>
+      <input type="checkbox" id="active" name="active" checked>
+      <br>
+      <!-- Inputs para os campos da tabela attributes -->
+      <table cellspacing="1" cellpadding="1" border="0">
+        <tbody>
+          <tr>
+            <td>Ref</td>
+            <td>
+              <input type="number" id="ref_min" name="ref_min" min="1" max="50" value="1"> - <input type="number" id="ref_max" name="ref_max" min="1" max="50" value="50">
+            </td>
+            <td>Tck</td>
+            <td>
+              <input type="number" id="tck_min" name="tck_min" min="1" max="50" value="1"> - <input type="number" id="tck_max" name="tck_max" min="1" max="50" value="50">
+            </td>
+            <td>Cre</td>
+            <td>
+              <input type="number" id="cre_min" name="cre_min" min="1" max="50" value="1"> - <input type="number" id="cre_max" name="cre_max" min="1" max="50" value="50">
+            </td>
+          </tr>
+          <tr>
+            <td>Sht</td>
+            <td>
+              <input type="number" id="sht_min" name="sht_min" min="1" max="50" value="1"> - <input type="number" id="sht_max" name="sht_max" min="1" max="50" value="50">
+            </td>
+            <td>Tmw</td>
+            <td>
+              <input type="number" id="tmw_min" name="tmw_min" min="1" max="50" value="1"> - <input type="number" id="tmw_max" name="tmw_max" min="1" max="50" value="50">
+            </td>
+            <td>One</td>
+            <td>
+              <input type="number" id="one_min" name="one_min" min="1" max="50" value="1"> - <input type="number" id="one_max" name="one_max" min="1" max="50" value="50">
+            </td>
+          </tr>
+          <tr>
+            <td>Mrk</td>
+            <td>
+              <input type="number" id="mrk_min" name="mrk_min" min="1" max="50" value="1"> - <input type="number" id="mrk_max" name="mrk_max" min="1" max="50" value="50">
+            </td>
+            <td>Pas</td>
+            <td>
+              <input type="number" id="pas_min" name="pas_min" min="1" max="50" value="1"> - <input type="number" id="pas_max" name="pas_max" min="1" max="50" value="50">
+            </td>
+            <td>Dri</td>
+            <td>
+              <input type="number" id="dri_min" name="dri_min" min="1" max="50" value="1"> - <input type="number" id="dri_max" name="dri_max" min="1" max="50" value="50">
+            </td>
+          </tr>
+          <tr>
+            <td>Sp</td>
+            <td>
+              <input type="number" id="sp_min" name="sp_min" min="1" max="50" value="1"> - <input type="number" id="sp_max" name="sp_max" min="1" max="50" value="50">
+            </td>
+            <td>Hnd</td>
+            <td>
+              <input type="number" id="hnd_min" name="hnd_min" min="1" max="50" value="1"> - <input type="number" id="hnd_max" name="hnd_max" min="1" max="50" value="50">
+            </td>
+            <td>Hea</td>
+            <td>
+              <input type="number" id="hea_min" name="hea_min" min="1" max="50" value="1"> - <input type="number" id="hea_max" name="hea_max" min="1" max="50" value="50">
+            </td>
+          </tr>
+          <tr>
+            <td>Lsh</td>
+            <td>
+              <input type="number" id="lsh_min" name="lsh_min" min="1" max="50" value="1"> - <input type="number" id="lsh_max" name="lsh_max" min="1" max="50" value="50">
+            </td>
+            <td>Psn</td>
+            <td>
+              <input type="number" id="psn_min" name="psn_min" min="1" max="50" value="1"> - <input type="number" id="psn_max" name="psn_max" min="1" max="50" value="50">
+            </td>
+            <td>Str</td>
+            <td>
+              <input type="number" id="str_min" name="str_min" min="1" max="50" value="1"> - <input type="number" id="str_max" name="str_max" min="1" max="50" value="50">
+            </td>
+          </tr>
+          <tr>
+            <td>Com</td>
+            <td>
+              <input type="number" id="com_min" name="com_min" min="1" max="50" value="1"> - <input type="number" id="com_max" name="com_max" min="1" max="50" value="50">
+            </td>
+            <td>Crs</td>
+            <td>
+              <input type="number" id="crs_min" name="crs_min" min="1" max="50" value="1"> - <input type="number" id="crs_max" name="crs_max" min="1" max="50" value="50">
+            </td>
+            <td>Fto</td>
+            <td>
+              <input type="number" id="fto_min" name="fto_min" min="1" max="50" value="1"> - <input type="number" id="fto_max" name="fto_max" min="1" max="50" value="50">
+            </td>
+          </tr>
+          <tr>
+            <td>Agg</td>
+            <td>
+              <input type="number" id="agg_min" name="agg_min" min="1" max="50" value="1"> - <input type="number" id="agg_max" name="agg_max" min="1" max="50" value="50">
+            </td>
+            <td>Inf</td>
+            <td>
+              <input type="number" id="inf_min" name="inf_min" min="1" max="50" value="1"> - <input type="number" id="inf_max" name="inf_max" min="1" max="50" value="50">
+            </td>
+            <td>Ecc</td>
+            <td>
+              <input type="number" id="ecc_min" name="ecc_min" min="1" max="50" value="1"> - <input type="number" id="ecc_max" name="ecc_max" min="1" max="50" value="50">
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <input type="submit" value="Enviar">
+    </form> 
+    {% if error %} 
+        <p style="color:red;">
+            {{ error }}
+        </p> 
+    {% endif %} 
+    {% if resultados %} 
+        <h2>Resultados:</h2>
+        <button id="export-csv">Exportar CSV</button>
+        <button id="export-json">Exportar JSON</button>
+        <table id="tabela-resultados" border="1">
+            <thead>
+                <tr>
+                <th>ID</th>
+                <th>Club ID</th>
+                <th>Nome</th>
+                <th>Posição</th>
+                <th>Nacionalidade</th>
+                <th>Idade</th>
+                <th>Rating</th>
+                <th>OPS</th>
+                </tr>
+            </thead>
+            <tbody> 
+                {% for resultado in resultados %} <tr>
+                <td><a href="https://www.dugout-online.com/players/details/youth/0/playerID/{{ resultado[0] }}">{{ resultado[0] }}</a></td>
+                <td><a href="https://www.dugout-online.com/clubinfo/none/clubid/{{ resultado[1] }}">{{ resultado[1] }}</a></td>
+                <td>{{ resultado[2] }}</td>
+                <td>{{ resultado[3] }}</td>
+                <td>{{ resultado[4] }}</td>
+                <td>{{ resultado[5] }}</td>
+                <td>{{ resultado[6] }}</td>
+                <td>{{ resultado[7] }}</td>
+                </tr> 
+                {% endfor %} 
+            </tbody>
+        </table> 
+    {% endif %} 
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+    <script>
+      $(document).ready(function() {
+        const table = $('#tabela-resultados').DataTable({
+          "pageLength": 25,
+          "order": [
+            [7, "desc"],
+            [6, "desc"]
+          ],
+          "language": {
+            "lengthMenu": "Mostrar _MENU_ registros por página",
+            "zeroRecords": "Nenhum registro encontrado",
+            "info": "Mostrando página _PAGE_ de _PAGES_",
+            "infoEmpty": "Nenhum registro disponível",
+            "infoFiltered": "(filtrado de _MAX_ total de registros)",
+            "search": "Pesquisar:",
+            "paginate": {
+              "next": "Próximo",
+              "previous": "Anterior"
+            }
+          }
+        });
+        // Exportar para CSV
+        $('#export-csv').click(function() {
+          let csvContent = "data:text/csv;charset=utf-8,";
+          csvContent += "ID,Club ID,Nome,Posição,Nacionalidade,Idade,Rating,OPS\n";
+          table.rows().every(function() {
+            let rowData = this.data().join(",");
+            csvContent += rowData + "\n";
+          });
+          const encodedUri = encodeURI(csvContent);
+          const link = document.createElement("a");
+          link.setAttribute("href", encodedUri);
+          link.setAttribute("download", "resultados.csv");
+          document.body.appendChild(link);
+          link.click();
+          document.body.removeChild(link);
+        });
+        // Exportar para JSON
+        $('#export-json').click(function() {
+          let jsonData = [];
+          table.rows().every(function() {
+            let rowData = this.data();
+            jsonData.push({
+              id: rowData[0],
+              club_id: rowData[1],
+              nome: rowData[2],
+              posicao: rowData[3],
+              nacionalidade: rowData[4],
+              idade: rowData[5],
+              rating: rowData[6],
+              ops: rowData[7]
+            });
+          });
+          const blob = new Blob([JSON.stringify(jsonData, null, 2)], {
+            type: 'application/json'
+          });
+          const url = URL.createObjectURL(blob);
+          const link = document.createElement("a");
+          link.setAttribute("href", url);
+          link.setAttribute("download", "resultados.json");
+          document.body.appendChild(link);
+          link.click();
+          document.body.removeChild(link);
+          URL.revokeObjectURL(url);
+        });
+      });
+    </script>
+  </body>
+</html>
