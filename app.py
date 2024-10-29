@@ -9,7 +9,8 @@ def index():
 
 @app.route('/consultar', methods=['POST'])
 def consultar():
-    nationality = request.form.get('nationality', '').strip()
+    nationality = request.form.get('nationality', '').strip().lower()
+    position = request.form.get('position', '').strip()
     age = request.form.get('age', None)
     active = request.form.get('active') == 'on'
 
@@ -25,7 +26,7 @@ def consultar():
     player_table = "player_active" if active else "player_inactive"
     attributes_table = "attributes_active" if active else "attributes_inactive"
 
-    query = build_query(player_table, attributes_table, nationality, age, attributes_values)
+    query = build_query(player_table, attributes_table, nationality, age, position, attributes_values)
 
     try:
         with sqlite3.connect('dugout.db') as connection:
@@ -37,7 +38,7 @@ def consultar():
 
     return render_template('index.html', resultados=resultados)
 
-def build_query(player_table, attributes_table, nationality, age, attributes_values):
+def build_query(player_table, attributes_table, nationality, age, position, attributes_values):
     query = f'''
     SELECT 
         {player_table}.id,
@@ -89,26 +90,50 @@ def build_query(player_table, attributes_table, nationality, age, attributes_val
     conditions = []
     parameters = []
 
-    if nationality:
+    if nationality and nationality != 'any':
         conditions.append(f"{player_table}.nationality = ?")
         parameters.append(nationality)
+
+    if position and position != 'ANY':
+        if position == 'DA':  # Defenders (any)
+            conditions.append(f"{player_table}.position = ? OR {player_table}.position = ? OR {player_table}.position = ?")
+            parameters.append('DC')
+            parameters.append('DR')
+            parameters.append('DL')
+        
+        elif position == 'MA':  # Midfielders (any)
+            conditions.append(f"{player_table}.position = ? OR {player_table}.position = ? OR {player_table}.position = ?")
+            parameters.append('MC')
+            parameters.append('MR')
+            parameters.append('ML')
+        
+        elif position == 'FA':  # Forwards (any)
+            conditions.append(f"{player_table}.position = ? OR {player_table}.position = ? OR {player_table}.position = ?")
+            parameters.append('FC')
+            parameters.append('FR')
+            parameters.append('FL')
+        else :
+            conditions.append(f"{player_table}.position = ?")
+            parameters.append(position)
+
+
 
     if age is not None:
         conditions.append(f"{player_table}.age <= ?")
         parameters.append(age)
 
-        # Filtragem para os atributos com intervalos
-        for field in attributes_values:
-            min_value = request.form.get(f"{field}_min", None)
-            max_value = request.form.get(f"{field}_max", None)
+    # Filtragem para os atributos com intervalos
+    for field in attributes_values:
+        min_value = request.form.get(f"{field}_min", None)
+        max_value = request.form.get(f"{field}_max", None)
 
-            if min_value is not None:
-                conditions.append(f"{attributes_table}.{field} >= ?")
-                parameters.append(min_value)
+        if min_value is not None:
+            conditions.append(f"{attributes_table}.{field} >= ?")
+            parameters.append(min_value)
 
-            if max_value is not None:
-                conditions.append(f"{attributes_table}.{field} <= ?")
-                parameters.append(max_value)
+        if max_value is not None:
+            conditions.append(f"{attributes_table}.{field} <= ?")
+            parameters.append(max_value)
 
     if conditions:
         query += " WHERE " + " AND ".join(conditions)
@@ -116,5 +141,6 @@ def build_query(player_table, attributes_table, nationality, age, attributes_val
         query += " ORDER BY OPS DESC LIMIT 1000"
 
     return {'sql': query, 'params': parameters}
+
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0', port=5000)
