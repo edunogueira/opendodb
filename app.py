@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request
-import sqlite3
+import mysql.connector
+from mysql.connector import Error
 
 app = Flask(__name__)
 
@@ -11,7 +12,8 @@ def index():
 def consultar():
     nationality = request.form.get('nationality', '').strip().lower()
     position = request.form.get('position', '').strip()
-    age = request.form.get('age', None)
+    age_str = request.form.get('age', '').strip()
+    age = int(age_str) if age_str else 0
     active = request.form.get('active') == 'on'
 
     attributes_fields = [
@@ -29,12 +31,24 @@ def consultar():
     query = build_query(player_table, attributes_table, nationality, age, position, attributes_values)
 
     try:
-        with sqlite3.connect('dugout.db') as connection:
-            cursor = connection.cursor()
+        # Conexão ao MySQL
+        mysql_conn = mysql.connector.connect(
+            host="",
+            user="",
+            password="",
+            database=""
+        )
+
+        # Executar a consulta
+        with mysql_conn.cursor(dictionary=True) as cursor:
             cursor.execute(query['sql'], query['params'])
             resultados = cursor.fetchall()
-    except sqlite3.Error as e:
-        return render_template('index.html', error=f"Erro ao acessar o banco de dados: {e}")
+
+    except Error as e:
+        return render_template('index.html', error=f"Erro ao acessar o banco de dados MySQL: {e}")
+    finally:
+        if mysql_conn.is_connected():
+            mysql_conn.close()
 
     return render_template('index.html', resultados=resultados)
 
@@ -91,35 +105,35 @@ def build_query(player_table, attributes_table, nationality, age, position, attr
     parameters = []
 
     if nationality and nationality != 'any':
-        conditions.append(f"{player_table}.nationality = ?")
+        conditions.append(f"{player_table}.nationality = %s")
         parameters.append(nationality)
 
     if position and position != 'ANY':
         if position == 'DA':  # Defenders (any)
-            conditions.append(f"{player_table}.position = ? OR {player_table}.position = ? OR {player_table}.position = ?")
+            conditions.append(f"{player_table}.position = %s OR {player_table}.position = %s OR {player_table}.position = %s")
             parameters.append('DC')
             parameters.append('DR')
             parameters.append('DL')
         
         elif position == 'MA':  # Midfielders (any)
-            conditions.append(f"{player_table}.position = ? OR {player_table}.position = ? OR {player_table}.position = ?")
+            conditions.append(f"{player_table}.position = %s OR {player_table}.position = %s OR {player_table}.position = %s")
             parameters.append('MC')
             parameters.append('MR')
             parameters.append('ML')
         
         elif position == 'FA':  # Forwards (any)
-            conditions.append(f"{player_table}.position = ? OR {player_table}.position = ? OR {player_table}.position = ?")
+            conditions.append(f"{player_table}.position = %s OR {player_table}.position = %s OR {player_table}.position = %s")
             parameters.append('FC')
             parameters.append('FR')
             parameters.append('FL')
         else :
-            conditions.append(f"{player_table}.position = ?")
+            conditions.append(f"{player_table}.position = %s")
             parameters.append(position)
 
 
 
-    if age is not None:
-        conditions.append(f"{player_table}.age <= ?")
+    if age != 0:
+        conditions.append(f"{player_table}.age <= %s")
         parameters.append(age)
 
     # Filtragem para os atributos com intervalos
@@ -128,11 +142,11 @@ def build_query(player_table, attributes_table, nationality, age, position, attr
         max_value = request.form.get(f"{field}_max", None)
 
         if min_value is not None:
-            conditions.append(f"{attributes_table}.{field} >= ?")
+            conditions.append(f"{attributes_table}.{field} >= %s")
             parameters.append(min_value)
 
         if max_value is not None:
-            conditions.append(f"{attributes_table}.{field} <= ?")
+            conditions.append(f"{attributes_table}.{field} <= %s")
             parameters.append(max_value)
 
     if conditions:
@@ -143,4 +157,4 @@ def build_query(player_table, attributes_table, nationality, age, position, attr
     return {'sql': query, 'params': parameters}
 
 if __name__ == '__main__':
-    app.run(debug=True, host='0.0.0.0', port=5000)
+    app.run(debug=True, host='0.0.0.0', port=4000)
