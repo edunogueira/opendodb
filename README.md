@@ -1,5 +1,12 @@
 app_mysql.py
 <br>Aplicação web para buscar no base de dados
+<br>python3 -m venv myenv
+<br>source myenv/bin/activate
+<br>export FLASK_APP=app_mysql.py
+<br>flask run --host=0.0.0.0
+<br>nohup flask run --host=0.0.0.0 &
+<br>gunicorn -w 4 -b 0.0.0.0:5000 app_mysql:app
+<br>deactivate
 
 <br>MissingTeams.py
 <br>Faz um diff na base e adiciona times generios nos ids que estão faltando
