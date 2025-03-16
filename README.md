@@ -1,9 +1,20 @@
-app.py
-<br>Para buscar no banco de dados
+app_mysql.py
+<br>Aplicação web para buscar no base de dados
 
-<br>scrap_players.py
-<br>Para extrair os jogadores, ajustar o id de inicio e fim, para extrair um time em especifico, colocar o mesmo id
-<br>obs: não funciona no proprio time :(
+<br>MissingTeams.py
+<br>Faz um diff na base e adiciona times generios nos ids que estão faltando
 
-<br>scrap_teams.py
-<br>Para extrair os times,  ajustar o id de inicio e fim, para extrair um time em especifico, colocar o mesmo id
+<br>PlayerScraper.py
+<br>Para extrair os jogadores dos times ativos salvos no banco de dados
+<br>* Na linha 54 alterar o club_id para o seu club id
+<br>* Na linha 157 se você quiser alterar clubes especificos, passar um array. Exp: get_clubinfo([1000,112411, 115000)
+
+<br>PlayerScraperInactive.py
+<br>Para extrair os jogadores dos times inativos salvos no banco de dados
+<br>* Na linha 54 alterar o club_id para o seu club id
+
+<br>TeamScraper.py
+<br>Para atualizar os times salvos na base dados
+
+<br>TO:DO
+<br>Implementar método move_players, para mover clubes e jogadores da base ativa para inativa
