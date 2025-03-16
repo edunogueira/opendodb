@@ -276,16 +276,14 @@
         </thead>
         <tbody>
             {% for resultado in resultados %} <tr>
-                <td><a href="https://www.dugout-online.com/players/details/youth/0/playerID/{{ resultado[0] }}">{{
-                        resultado[0] }}</a></td>
-                <td><a href="https://www.dugout-online.com/clubinfo/none/clubid/{{ resultado[1] }}">{{ resultado[1]
-                        }}</a></td>
-                <td>{{ resultado[2] }}</td>
-                <td>{{ resultado[3] }}</td>
-                <td>{{ resultado[4] }}</td>
-                <td>{{ resultado[5] }}</td>
-                <td>{{ resultado[6] }}</td>
-                <td>{{ resultado[7] }}</td>
+                <td><a href="https://www.dugout-online.com/players/details/youth/0/playerID/{{ resultado['id'] }}">{{ resultado['id'] }}</a></td>
+                <td><a href="https://www.dugout-online.com/clubinfo/none/clubid/{{ resultado['club_id'] }}">{{ resultado['club_id'] }}</a></td>
+                <td>{{ resultado['name'] }}</td>
+                <td>{{ resultado['position'] }}</td>
+                <td>{{ resultado['nationality'] }}</td>
+                <td>{{ resultado['age'] }}</td>
+                <td>{{ resultado['rating'] }}</td>
+                <td>{{ resultado['OPS'] }}</td>
             </tr>
             {% endfor %}
         </tbody>
