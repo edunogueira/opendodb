@@ -1,4 +1,8 @@
-app_mysql.py
+Para fazer funcionar, você precisará atualizar alguns arquivos com suas variaveis:
+<br>Banco de dados: database/db.py e app_mysql.py
+<br>Cookie: database/login_manager.py
+
+<br>app_mysql.py
 <br>Aplicação web para buscar no base de dados
 <br>python3 -m venv myenv
 <br>source myenv/bin/activate
