@@ -110,27 +110,25 @@ def build_query(player_table, attributes_table, nationality, age, position, attr
 
     if position and position != 'ANY':
         if position == 'DA':  # Defenders (any)
-            conditions.append(f"{player_table}.position = %s OR {player_table}.position = %s OR {player_table}.position = %s")
+            conditions.append(f"({player_table}.position = %s OR {player_table}.position = %s OR {player_table}.position = %s)")
             parameters.append('DC')
             parameters.append('DR')
             parameters.append('DL')
         
         elif position == 'MA':  # Midfielders (any)
-            conditions.append(f"{player_table}.position = %s OR {player_table}.position = %s OR {player_table}.position = %s")
+            conditions.append(f"({player_table}.position = %s OR {player_table}.position = %s OR {player_table}.position = %s)")
             parameters.append('MC')
             parameters.append('MR')
             parameters.append('ML')
         
         elif position == 'FA':  # Forwards (any)
-            conditions.append(f"{player_table}.position = %s OR {player_table}.position = %s OR {player_table}.position = %s")
+            conditions.append(f"({player_table}.position = %s OR {player_table}.position = %s OR {player_table}.position = %s)")
             parameters.append('FC')
             parameters.append('FR')
             parameters.append('FL')
         else :
             conditions.append(f"{player_table}.position = %s")
             parameters.append(position)
-
-
 
     if age != 0:
         conditions.append(f"{player_table}.age <= %s")
