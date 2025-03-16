@@ -191,10 +191,10 @@ class TeamScraper:
 
     def find_missing_clubs(self):        
         # Pega os IDs existentes no banco
-        existing_clubs = set(self.db.get_clubinfo())  # Transforma em conjunto (set) para facilitar a comparação
+        existing_clubs = set(self.db.get_clubinfo())
 
-        # Define a lista esperada de IDs (ajuste o range conforme necessário)
-        expected_clubs = set(range(1, max(existing_clubs) + 1))  # Supondo que os clubes são sequenciais
+        # Define a lista esperada de IDs
+        expected_clubs = set(range(1, max(existing_clubs) + 1))
 
         # Encontra os clubes ausentes
         missing_clubs = sorted(expected_clubs - existing_clubs)  # Ordena os IDs faltantes
