@@ -1,8 +1,24 @@
+import os
 from flask import Flask, render_template, request
+from dotenv import load_dotenv
 import mysql.connector
 from mysql.connector import Error
 
+# Load environment variables
+load_dotenv()
+
 app = Flask(__name__)
+
+VALID_POSITIONS = {
+    'GK', 'DC', 'DL', 'DR', 'ML', 'MR', 'MC', 'FL', 'FR', 'FC',
+    'DA', 'MA', 'FA', 'ANY'
+}
+
+VALID_ATTRIBUTES = {
+    'ref', 'tck', 'cre', 'sht', 'tmw', 'one', 'mrk', 'pas', 'dri',
+    'sp', 'hnd', 'hea', 'lsh', 'psn', 'str', 'com', 'crs', 'fto',
+    'agg', 'inf', 'ecc'
+}
 
 @app.route('/')
 def index():
@@ -11,41 +27,38 @@ def index():
 @app.route('/consultar', methods=['POST'])
 def consultar():
     nationality = request.form.get('nationality', '').strip().lower()
-    position = request.form.get('position', '').strip()
+    position = request.form.get('position', '').strip().upper()
     age_str = request.form.get('age', '').strip()
-    age = int(age_str) if age_str else 0
+    age = int(age_str) if age_str.isdigit() else 0
     active = request.form.get('active') == 'on'
-
-    attributes_fields = [
-        'ref', 'tck', 'cre', 'sht', 'tmw', 'one',
-        'mrk', 'pas', 'dri', 'sp', 'hnd', 'hea',
-        'lsh', 'psn', 'str', 'com', 'crs', 'fto',
-        'agg', 'inf', 'ecc'
-    ]
-
-    attributes_values = {field: request.form.get(field, None) for field in attributes_fields}
 
     player_table = "player_active" if active else "player_inactive"
     attributes_table = "attributes_active" if active else "attributes_inactive"
 
-    query = build_query(player_table, attributes_table, nationality, age, position, attributes_values)
+    # Atributos válidos apenas
+    attributes_values = {}
+    for attr in VALID_ATTRIBUTES:
+        if attr + '_min' in request.form and request.form[attr + '_min'] != '1':
+            attributes_values[attr] = True  # presença do checkbox
+        if attr + '_max' in request.form and request.form[attr + '_max'] != '50':
+            attributes_values[attr] = True  # presença do checkbox
+
+    query_data = build_query(player_table, attributes_table, nationality, age, position, attributes_values)
 
     try:
-        # Conexão ao MySQL
         mysql_conn = mysql.connector.connect(
-            host="",
-            user="",
-            password="",
-            database=""
+            host=os.environ.get("MYSQL_HOST"),
+            user=os.environ.get("MYSQL_USER"),
+            password=os.environ.get("MYSQL_PASSWORD"),
+            database=os.environ.get("MYSQL_DB")
         )
 
-        # Executar a consulta
         with mysql_conn.cursor(dictionary=True) as cursor:
-            cursor.execute(query['sql'], query['params'])
+            cursor.execute(query_data['sql'], query_data['params'])
             resultados = cursor.fetchall()
 
     except Error as e:
-        return render_template('index.html', error=f"Erro ao acessar o banco de dados MySQL: {e}")
+        return render_template('index.html', error=f"Erro ao acessar o banco de dados: {e}")
     finally:
         if mysql_conn.is_connected():
             mysql_conn.close()
@@ -53,7 +66,7 @@ def consultar():
     return render_template('index.html', resultados=resultados)
 
 def build_query(player_table, attributes_table, nationality, age, position, attributes_values):
-    query = f'''
+    query = f"""
     SELECT 
         {player_table}.id,
         {player_table}.club_id,
@@ -99,60 +112,53 @@ def build_query(player_table, attributes_table, nationality, age, position, attr
         {player_table}
     LEFT JOIN 
         {attributes_table} ON {player_table}.id = {attributes_table}.id
-    '''
+    """
 
     conditions = []
-    parameters = []
+    params = []
 
     if nationality and nationality != 'any':
         conditions.append(f"{player_table}.nationality = %s")
-        parameters.append(nationality)
+        params.append(nationality)
 
-    if position and position != 'ANY':
-        if position == 'DA':  # Defenders (any)
-            conditions.append(f"({player_table}.position = %s OR {player_table}.position = %s OR {player_table}.position = %s)")
-            parameters.append('DC')
-            parameters.append('DR')
-            parameters.append('DL')
-        
-        elif position == 'MA':  # Midfielders (any)
-            conditions.append(f"({player_table}.position = %s OR {player_table}.position = %s OR {player_table}.position = %s)")
-            parameters.append('MC')
-            parameters.append('MR')
-            parameters.append('ML')
-        
-        elif position == 'FA':  # Forwards (any)
-            conditions.append(f"({player_table}.position = %s OR {player_table}.position = %s OR {player_table}.position = %s)")
-            parameters.append('FC')
-            parameters.append('FR')
-            parameters.append('FL')
-        else :
+    if position in VALID_POSITIONS and position != 'ANY':
+        if position == 'DA':
+            conditions.append(f"{player_table}.position IN (%s, %s, %s)")
+            params.extend(['DC', 'DL', 'DR'])
+        elif position == 'MA':
+            conditions.append(f"{player_table}.position IN (%s, %s, %s)")
+            params.extend(['MC', 'ML', 'MR'])
+        elif position == 'FA':
+            conditions.append(f"{player_table}.position IN (%s, %s, %s)")
+            params.extend(['FC', 'FL', 'FR'])
+        else:
             conditions.append(f"{player_table}.position = %s")
-            parameters.append(position)
+            params.append(position)
 
-    if age != 0:
+    if age > 0:
         conditions.append(f"{player_table}.age <= %s")
-        parameters.append(age)
+        params.append(age)
 
-    # Filtragem para os atributos com intervalos
     for field in attributes_values:
-        min_value = request.form.get(f"{field}_min", None)
-        max_value = request.form.get(f"{field}_max", None)
-
-        if min_value is not None:
+        try:
+            min_val = int(request.form.get(f"{field}_min", ""))
             conditions.append(f"{attributes_table}.{field} >= %s")
-            parameters.append(min_value)
-
-        if max_value is not None:
+            params.append(min_val)
+        except ValueError:
+            pass
+        try:
+            max_val = int(request.form.get(f"{field}_max", ""))
             conditions.append(f"{attributes_table}.{field} <= %s")
-            parameters.append(max_value)
+            params.append(max_val)
+        except ValueError:
+            pass
 
     if conditions:
         query += " WHERE " + " AND ".join(conditions)
 
-        query += " ORDER BY OPS DESC LIMIT 1000"
+    query += " ORDER BY OPS DESC LIMIT 1000"
 
-    return {'sql': query, 'params': parameters}
+    return {'sql': query, 'params': params}
 
 if __name__ == '__main__':
-    app.run(debug=True, host='0.0.0.0', port=4000)
+    app.run(host='127.0.0.1', port=4000)
