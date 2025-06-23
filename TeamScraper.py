@@ -151,14 +151,11 @@ class TeamScraper:
                 ))
                 self.db.update_club_info(club)
                 
-                if status == 0 and self.clubinfo[club_id] == 1:
-                    self.db.log_clubinfo_change(club_id, status, change_date)
-                
                 print(f"Clube {club_id} atualizado com sucesso.")
-                logging.error(f"Clube {club_id} atualizado com sucesso.")
+                #logging.error(f"Clube {club_id} atualizado com sucesso.")
             else:
                 print(f"Nenhum jogador encontrado para o clube {club_id}. Pulando atualização.")
-                logging.error(f"Nenhum jogador encontrado para o clube {club_id}. Pulando atualização.")
+                #logging.error(f"Nenhum jogador encontrado para o clube {club_id}. Pulando atualização.")
 
     # Processa todos os clubes em lotes
     async def process_clubs(self, batch_size=20):
@@ -177,24 +174,14 @@ class TeamScraper:
                 await asyncio.gather(*tasks)
 
     def move_players(self):
-        today = datetime.today().strftime('%Y-%m-%d')
-        clubs = self.db.get_club_active_history(today)
-        for club in clubs:
-            club_id = club[0]
-
-            players = self.db.get_player_active(club_id)
-
-            for player in players:
-                player_id, club_id, name, position, nationality, age, rating = player
-
-                self.db.move_player(player)
+        self.db.move_player()
 
     def find_missing_clubs(self):        
         # Pega os IDs existentes no banco
-        existing_clubs = set(self.db.get_clubinfo())
+        existing_clubs = set(self.db.get_clubinfo())  # Transforma em conjunto (set) para facilitar a comparação
 
-        # Define a lista esperada de IDs
-        expected_clubs = set(range(1, max(existing_clubs) + 1))
+        # Define a lista esperada de IDs (ajuste o range conforme necessário)
+        expected_clubs = set(range(1, max(existing_clubs) + 1))  # Supondo que os clubes são sequenciais
 
         # Encontra os clubes ausentes
         missing_clubs = sorted(expected_clubs - existing_clubs)  # Ordena os IDs faltantes
@@ -217,6 +204,28 @@ class TeamScraper:
         self.db.update_club_info(club)
 
         return missing_clubs
+    
+    async def find_and_process_new_clubs(self):
+        last_id = self.db.get_max_club_id()
+        batch_size = 20
+
+        async with aiohttp.ClientSession() as session:
+            while True:
+                tasks = []
+                ids = list(range(last_id + 1, last_id + 1 + batch_size))
+                print(f"Verificando clubes de {ids[0]} a {ids[-1]}")
+
+                for club_id in ids:
+                    tasks.append(self.process_club(session, club_id))
+
+                results = await asyncio.gather(*tasks)
+                last_updated_id = self.db.get_max_club_id()
+
+                if last_updated_id == last_id:
+                    print("Nenhum clube válido encontrado no último batch. Encerrando.")
+                    break
+
+                last_id = last_updated_id
 
 # Função para iniciar o processo
 async def main():
@@ -228,9 +237,10 @@ async def main():
         await scraper.initialize()
 
         # Processa os jogadores
+        await scraper.find_and_process_new_clubs()
         await scraper.process_clubs()
 
-        #scraper.move_players()
+        scraper.move_players()
     except Exception as e:
         print(f"Erro: {e}")
 
