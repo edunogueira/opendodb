@@ -51,7 +51,7 @@ class PlayerScraper:
             dom = etree.HTML(str(soup))
             elements = dom.xpath('//tr[contains(@class, "matches_row1") or contains(@class, "matches_row2")]')
             for element in elements:
-                i = 1 if club_id == '112411' else 0
+                i = 1
                 name = element.xpath('./td[' + str(3 + i) + ']//a/text()')[0]
                 if "(Loaned out)" in name:
                     continue
@@ -101,10 +101,10 @@ class PlayerScraper:
                 if players:
                     self.update_players_and_attributes(players)
                     print(f"Clube {club_id} atualizado com sucesso.")
-                    logging.error(f"Clube {club_id} atualizado com sucesso.")
+                    #logging.error(f"Clube {club_id} atualizado com sucesso.")
                 else:
                     print(f"Nenhum jogador encontrado para o clube {club_id}. Pulando atualização.")
-                    logging.error(f"Nenhum jogador encontrado para o clube {club_id}. Pulando atualização.")
+                    #logging.error(f"Nenhum jogador encontrado para o clube {club_id}. Pulando atualização.")
             else:
                 logging.error(f"Falha ao processar clube {club_id}. Tentando novamente...")
 
