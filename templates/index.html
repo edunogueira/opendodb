@@ -33,224 +33,224 @@
         <table cellspacing="1" cellpadding="1" border="0">
             <tbody>
                 <tr>
-                    <td>Nacionalidade</td>
+                    <td>Nationality</td>
                     <td>
                         <select name="nationality" id="nationality">
-                            <option name="ANY" value="">Anywhere</option>
-                            <option name="ALB" value="ALB">Albania</option>
-                            <option name="ALG" value="ALG">Algeria</option>
-                            <option name="ARG" value="ARG">Argentina</option>
-                            <option name="AUS" value="AUS">Australia</option>
-                            <option name="AUT" value="AUT">Austria</option>
-                            <option name="BAN" value="BAN">Bangladesh</option>
-                            <option name="BEL" value="BEL">Belgium</option>
-                            <option name="BOL" value="BOL">Bolivia</option>
-                            <option name="BIH" value="BIH">Bosnia and Herzegovina</option>
-                            <option name="BRZ" value="BRZ">Brazil</option>
-                            <option name="BUL" value="BUL">Bulgaria</option>
-                            <option name="CAN" value="CAN">Canada</option>
-                            <option name="CHI" value="CHI">Chile</option>
-                            <option name="CHN" value="CHN">China</option>
-                            <option name="COL" value="COL">Colombia</option>
-                            <option name="CRO" value="CRO">Croatia</option>
-                            <option name="CZE" value="CZE">Czech Republic</option>
-                            <option name="DEN" value="DEN">Denmark</option>
-                            <option name="ENG" value="ENG">England</option>
-                            <option name="EST" value="EST">Estonia</option>
-                            <option name="FIN" value="FIN">Finland</option>
-                            <option name="FRA" value="FRA">France</option>
-                            <option name="GER" value="GER">Germany</option>
-                            <option name="GRE" value="GRE">Greece</option>
-                            <option name="HUN" value="HUN">Hungary</option>
-                            <option name="ICE" value="ICE">Iceland</option>
-                            <option name="IND" value="IND">India</option>
-                            <option name="IRE" value="IRE">Ireland</option>
-                            <option name="ISR" value="ISR">Israel</option>
-                            <option name="ITA" value="ITA">Italy</option>
-                            <option name="JPN" value="JPN">Japan</option>
-                            <option name="LAT" value="LAT">Latvia</option>
-                            <option name="LIT" value="LIT">Lithuania</option>
-                            <option name="MAL" value="MAL">Malta</option>
-                            <option name="MEX" value="MEX">Mexico</option>
-                            <option name="MOL" value="MOL">Moldova</option>
-                            <option name="NET" value="NET">Netherlands</option>
-                            <option name="NZE" value="NZE">New Zealand</option>
-                            <option name="NOR" value="NOR">Norway</option>
-                            <option name="PER" value="PER">Peru</option>
-                            <option name="POL" value="POL">Poland</option>
-                            <option name="POR" value="POR">Portugal</option>
-                            <option name="MTN" value="MTN">Rep. of Montenegro</option>
-                            <option name="ROM" value="ROM">Romania</option>
-                            <option name="RUS" value="RUS">Russia</option>
-                            <option name="SCO" value="SCO">Scotland</option>
-                            <option name="SAM" value="SAM">Serbia</option>
-                            <option name="SVK" value="SVK">Slovakia</option>
-                            <option name="SLO" value="SLO">Slovenia</option>
-                            <option name="SAF" value="SAF">South Africa</option>
-                            <option name="SKO" value="SKO">South Korea</option>
-                            <option name="SPA" value="SPA">Spain</option>
-                            <option name="SWE" value="SWE">Sweden</option>
-                            <option name="SUI" value="SUI">Switzerland</option>
-                            <option name="THA" value="THA">Thailand</option>
-                            <option name="TUR" value="TUR">Turkey</option>
-                            <option name="USA" value="USA">United States of America</option>
-                            <option name="URU" value="URU">Uruguay</option>
-                            <option name="VEN" value="VEN">Venezuela</option>
+                            <option value="" {% if request.form.get('nationality') == '' %}selected{% endif %}>Anywhere</option>
+                            <option value="ALB" {% if request.form.get('nationality') == 'ALB' %}selected{% endif %}>Albania</option>
+                            <option value="ALG" {% if request.form.get('nationality') == 'ALG' %}selected{% endif %}>Algeria</option>
+                            <option value="ARG" {% if request.form.get('nationality') == 'ARG' %}selected{% endif %}>Argentina</option>
+                            <option value="AUS" {% if request.form.get('nationality') == 'AUS' %}selected{% endif %}>Australia</option>
+                            <option value="AUT" {% if request.form.get('nationality') == 'AUT' %}selected{% endif %}>Austria</option>
+                            <option value="BAN" {% if request.form.get('nationality') == 'BAN' %}selected{% endif %}>Bangladesh</option>
+                            <option value="BEL" {% if request.form.get('nationality') == 'BEL' %}selected{% endif %}>Belgium</option>
+                            <option value="BOL" {% if request.form.get('nationality') == 'BOL' %}selected{% endif %}>Bolivia</option>
+                            <option value="BIH" {% if request.form.get('nationality') == 'BIH' %}selected{% endif %}>Bosnia and Herzegovina</option>
+                            <option value="BRZ" {% if request.form.get('nationality') == 'BRZ' %}selected{% endif %}>Brazil</option>
+                            <option value="BUL" {% if request.form.get('nationality') == 'BUL' %}selected{% endif %}>Bulgaria</option>
+                            <option value="CAN" {% if request.form.get('nationality') == 'CAN' %}selected{% endif %}>Canada</option>
+                            <option value="CHI" {% if request.form.get('nationality') == 'CHI' %}selected{% endif %}>Chile</option>
+                            <option value="CHN" {% if request.form.get('nationality') == 'CHN' %}selected{% endif %}>China</option>
+                            <option value="COL" {% if request.form.get('nationality') == 'COL' %}selected{% endif %}>Colombia</option>
+                            <option value="CRO" {% if request.form.get('nationality') == 'CRO' %}selected{% endif %}>Croatia</option>
+                            <option value="CZE" {% if request.form.get('nationality') == 'CZE' %}selected{% endif %}>Czech Republic</option>
+                            <option value="DEN" {% if request.form.get('nationality') == 'DEN' %}selected{% endif %}>Denmark</option>
+                            <option value="ENG" {% if request.form.get('nationality') == 'ENG' %}selected{% endif %}>England</option>
+                            <option value="EST" {% if request.form.get('nationality') == 'EST' %}selected{% endif %}>Estonia</option>
+                            <option value="FIN" {% if request.form.get('nationality') == 'FIN' %}selected{% endif %}>Finland</option>
+                            <option value="FRA" {% if request.form.get('nationality') == 'FRA' %}selected{% endif %}>France</option>
+                            <option value="GER" {% if request.form.get('nationality') == 'GER' %}selected{% endif %}>Germany</option>
+                            <option value="GRE" {% if request.form.get('nationality') == 'GRE' %}selected{% endif %}>Greece</option>
+                            <option value="HUN" {% if request.form.get('nationality') == 'HUN' %}selected{% endif %}>Hungary</option>
+                            <option value="ICE" {% if request.form.get('nationality') == 'ICE' %}selected{% endif %}>Iceland</option>
+                            <option value="IND" {% if request.form.get('nationality') == 'IND' %}selected{% endif %}>India</option>
+                            <option value="IRE" {% if request.form.get('nationality') == 'IRE' %}selected{% endif %}>Ireland</option>
+                            <option value="ISR" {% if request.form.get('nationality') == 'ISR' %}selected{% endif %}>Israel</option>
+                            <option value="ITA" {% if request.form.get('nationality') == 'ITA' %}selected{% endif %}>Italy</option>
+                            <option value="JPN" {% if request.form.get('nationality') == 'JPN' %}selected{% endif %}>Japan</option>
+                            <option value="LAT" {% if request.form.get('nationality') == 'LAT' %}selected{% endif %}>Latvia</option>
+                            <option value="LIT" {% if request.form.get('nationality') == 'LIT' %}selected{% endif %}>Lithuania</option>
+                            <option value="MAL" {% if request.form.get('nationality') == 'MAL' %}selected{% endif %}>Malta</option>
+                            <option value="MEX" {% if request.form.get('nationality') == 'MEX' %}selected{% endif %}>Mexico</option>
+                            <option value="MOL" {% if request.form.get('nationality') == 'MOL' %}selected{% endif %}>Moldova</option>
+                            <option value="NET" {% if request.form.get('nationality') == 'NET' %}selected{% endif %}>Netherlands</option>
+                            <option value="NZE" {% if request.form.get('nationality') == 'NZE' %}selected{% endif %}>New Zealand</option>
+                            <option value="NOR" {% if request.form.get('nationality') == 'NOR' %}selected{% endif %}>Norway</option>
+                            <option value="PER" {% if request.form.get('nationality') == 'PER' %}selected{% endif %}>Peru</option>
+                            <option value="POL" {% if request.form.get('nationality') == 'POL' %}selected{% endif %}>Poland</option>
+                            <option value="POR" {% if request.form.get('nationality') == 'POR' %}selected{% endif %}>Portugal</option>
+                            <option value="MTN" {% if request.form.get('nationality') == 'MTN' %}selected{% endif %}>Rep. of Montenegro</option>
+                            <option value="ROM" {% if request.form.get('nationality') == 'ROM' %}selected{% endif %}>Romania</option>
+                            <option value="RUS" {% if request.form.get('nationality') == 'RUS' %}selected{% endif %}>Russia</option>
+                            <option value="SCO" {% if request.form.get('nationality') == 'SCO' %}selected{% endif %}>Scotland</option>
+                            <option value="SAM" {% if request.form.get('nationality') == 'SAM' %}selected{% endif %}>Serbia</option>
+                            <option value="SVK" {% if request.form.get('nationality') == 'SVK' %}selected{% endif %}>Slovakia</option>
+                            <option value="SLO" {% if request.form.get('nationality') == 'SLO' %}selected{% endif %}>Slovenia</option>
+                            <option value="SAF" {% if request.form.get('nationality') == 'SAF' %}selected{% endif %}>South Africa</option>
+                            <option value="SKO" {% if request.form.get('nationality') == 'SKO' %}selected{% endif %}>South Korea</option>
+                            <option value="SPA" {% if request.form.get('nationality') == 'SPA' %}selected{% endif %}>Spain</option>
+                            <option value="SWE" {% if request.form.get('nationality') == 'SWE' %}selected{% endif %}>Sweden</option>
+                            <option value="SUI" {% if request.form.get('nationality') == 'SUI' %}selected{% endif %}>Switzerland</option>
+                            <option value="THA" {% if request.form.get('nationality') == 'THA' %}selected{% endif %}>Thailand</option>
+                            <option value="TUR" {% if request.form.get('nationality') == 'TUR' %}selected{% endif %}>Turkey</option>
+                            <option value="USA" {% if request.form.get('nationality') == 'USA' %}selected{% endif %}>United States of America</option>
+                            <option value="URU" {% if request.form.get('nationality') == 'URU' %}selected{% endif %}>Uruguay</option>
+                            <option value="VEN" {% if request.form.get('nationality') == 'VEN' %}selected{% endif %}>Venezuela</option>
                         </select>
                     </td>
-                    <td>Idade</td>
+                    <td>Age</td>
                     <td>
-                        <input type="number" id="age" name="age" placeholder="Idade">
+                        <input type="number" id="age" name="age" placeholder="Age" value="{{ request.form.age }}">
                     </td>
-                    <td>Posição</td>
+                    <td>Position</td>
                     <td>
                         <select name="position">
-                            <option name="ANY" value="ANY">Any</option>
-                            <option name="GK" value="GK">Goalkeeper</option>
-                            <option name="DA" value="DA">Defender(any)</option>
-                            <option name="DL" value="DL">Defender(left)</option>
-                            <option name="DC" value="DC">Defender(center)</option>
-                            <option name="DR" value="DR">Defender(right)</option>
-                            <option name="MA" value="MA">Midfielder(any)</option>
-                            <option name="ML" value="ML">Midfielder(left)</option>
-                            <option name="MC" value="MC">Midfielder(center)</option>
-                            <option name="MR" value="MR">Midfielder(right)</option>
-                            <option name="FA" value="FA">Forward(any)</option>
-                            <option name="FL" value="FL">Forward(left)</option>
-                            <option name="FC" value="FC">Forward(center)</option>
-                            <option name="FR" value="FR">Forward(right)</option>
-
+                            <option value="ANY" {% if request.form.get('position') == 'ANY' %}selected{% endif %}>Any</option>
+                            <option value="GK" {% if request.form.get('position') == 'GK' %}selected{% endif %}>Goalkeeper</option>
+                            <option value="DA" {% if request.form.get('position') == 'DA' %}selected{% endif %}>Defender(any)</option>
+                            <option value="DL" {% if request.form.get('position') == 'DL' %}selected{% endif %}>Defender(left)</option>
+                            <option value="DC" {% if request.form.get('position') == 'DC' %}selected{% endif %}>Defender(center)</option>
+                            <option value="DR" {% if request.form.get('position') == 'DR' %}selected{% endif %}>Defender(right)</option>
+                            <option value="MA" {% if request.form.get('position') == 'MA' %}selected{% endif %}>Midfielder(any)</option>
+                            <option value="ML" {% if request.form.get('position') == 'ML' %}selected{% endif %}>Midfielder(left)</option>
+                            <option value="MC" {% if request.form.get('position') == 'MC' %}selected{% endif %}>Midfielder(center)</option>
+                            <option value="MR" {% if request.form.get('position') == 'MR' %}selected{% endif %}>Midfielder(right)</option>
+                            <option value="FA" {% if request.form.get('position') == 'FA' %}selected{% endif %}>Forward(any)</option>
+                            <option value="FL" {% if request.form.get('position') == 'FL' %}selected{% endif %}>Forward(left)</option>
+                            <option value="FC" {% if request.form.get('position') == 'FC' %}selected{% endif %}>Forward(center)</option>
+                            <option value="FR" {% if request.form.get('position') == 'FR' %}selected{% endif %}>Forward(right)</option>
                         </select>
                     </td>
                 </tr>
                 <tr>
-                    <td>Ativos</td>
+                    <td>Active</td>
                     <td>
-                        <input type="checkbox" id="active" name="active" checked>
+                        <input type="checkbox" id="active" name="active"
+                            {% if request.method == 'GET' or request.form.get('active') %}checked{% endif %}>
                     </td>
                 </tr>
                 <tr>
                     <td>Ref</td>
                     <td>
-                        <input type="number" id="ref_min" name="ref_min" min="1" max="50" value="1"> - <input
-                            type="number" id="ref_max" name="ref_max" min="1" max="50" value="50">
+                        <input type="number" id="ref_min" name="ref_min" min="1" max="50" value="{{ request.form.get('ref_min', 1) }}"> -
+                        <input type="number" id="ref_max" name="ref_max" min="1" max="50" value="{{ request.form.get('ref_max', 50) }}">
                     </td>
                     <td>Tck</td>
                     <td>
-                        <input type="number" id="tck_min" name="tck_min" min="1" max="50" value="1"> - <input
-                            type="number" id="tck_max" name="tck_max" min="1" max="50" value="50">
+                        <input type="number" id="tck_min" name="tck_min" min="1" max="50" value="{{ request.form.get('tck_min', 1) }}"> -
+                        <input type="number" id="tck_max" name="tck_max" min="1" max="50" value="{{ request.form.get('tck_max', 50) }}">
                     </td>
                     <td>Cre</td>
                     <td>
-                        <input type="number" id="cre_min" name="cre_min" min="1" max="50" value="1"> - <input
-                            type="number" id="cre_max" name="cre_max" min="1" max="50" value="50">
+                        <input type="number" id="cre_min" name="cre_min" min="1" max="50" value="{{ request.form.get('cre_min', 1) }}"> -
+                        <input type="number" id="cre_max" name="cre_max" min="1" max="50" value="{{ request.form.get('cre_max', 50) }}">
                     </td>
                 </tr>
                 <tr>
                     <td>Sht</td>
                     <td>
-                        <input type="number" id="sht_min" name="sht_min" min="1" max="50" value="1"> - <input
-                            type="number" id="sht_max" name="sht_max" min="1" max="50" value="50">
+                        <input type="number" id="sht_min" name="sht_min" min="1" max="50" value="{{ request.form.get('sht_min', 1) }}"> -
+                        <input type="number" id="sht_max" name="sht_max" min="1" max="50" value="{{ request.form.get('sht_max', 50) }}">
                     </td>
                     <td>Tmw</td>
                     <td>
-                        <input type="number" id="tmw_min" name="tmw_min" min="1" max="50" value="1"> - <input
-                            type="number" id="tmw_max" name="tmw_max" min="1" max="50" value="50">
+                        <input type="number" id="tmw_min" name="tmw_min" min="1" max="50" value="{{ request.form.get('tmw_min', 1) }}"> -
+                        <input type="number" id="tmw_max" name="tmw_max" min="1" max="50" value="{{ request.form.get('tmw_max', 50) }}">
                     </td>
                     <td>One</td>
                     <td>
-                        <input type="number" id="one_min" name="one_min" min="1" max="50" value="1"> - <input
-                            type="number" id="one_max" name="one_max" min="1" max="50" value="50">
+                        <input type="number" id="one_min" name="one_min" min="1" max="50" value="{{ request.form.get('one_min', 1) }}"> -
+                        <input type="number" id="one_max" name="one_max" min="1" max="50" value="{{ request.form.get('one_max', 50) }}">
                     </td>
                 </tr>
                 <tr>
                     <td>Mrk</td>
                     <td>
-                        <input type="number" id="mrk_min" name="mrk_min" min="1" max="50" value="1"> - <input
-                            type="number" id="mrk_max" name="mrk_max" min="1" max="50" value="50">
+                        <input type="number" id="mrk_min" name="mrk_min" min="1" max="50" value="{{ request.form.get('mrk_min', 1) }}"> -
+                        <input type="number" id="mrk_max" name="mrk_max" min="1" max="50" value="{{ request.form.get('mrk_max', 50) }}">
                     </td>
                     <td>Pas</td>
                     <td>
-                        <input type="number" id="pas_min" name="pas_min" min="1" max="50" value="1"> - <input
-                            type="number" id="pas_max" name="pas_max" min="1" max="50" value="50">
+                        <input type="number" id="pas_min" name="pas_min" min="1" max="50" value="{{ request.form.get('pas_min', 1) }}"> -
+                        <input type="number" id="pas_max" name="pas_max" min="1" max="50" value="{{ request.form.get('pas_max', 50) }}">
                     </td>
                     <td>Dri</td>
                     <td>
-                        <input type="number" id="dri_min" name="dri_min" min="1" max="50" value="1"> - <input
-                            type="number" id="dri_max" name="dri_max" min="1" max="50" value="50">
+                        <input type="number" id="dri_min" name="dri_min" min="1" max="50" value="{{ request.form.get('dri_min', 1) }}"> -
+                        <input type="number" id="dri_max" name="dri_max" min="1" max="50" value="{{ request.form.get('dri_max', 50) }}">
                     </td>
                 </tr>
                 <tr>
                     <td>Sp</td>
                     <td>
-                        <input type="number" id="sp_min" name="sp_min" min="1" max="50" value="1"> - <input
-                            type="number" id="sp_max" name="sp_max" min="1" max="50" value="50">
+                        <input type="number" id="sp_min" name="sp_min" min="1" max="50" value="{{ request.form.get('sp_min', 1) }}"> -
+                        <input type="number" id="sp_max" name="sp_max" min="1" max="50" value="{{ request.form.get('sp_max', 50) }}">
                     </td>
                     <td>Hnd</td>
                     <td>
-                        <input type="number" id="hnd_min" name="hnd_min" min="1" max="50" value="1"> - <input
-                            type="number" id="hnd_max" name="hnd_max" min="1" max="50" value="50">
+                        <input type="number" id="hnd_min" name="hnd_min" min="1" max="50" value="{{ request.form.get('hnd_min', 1) }}"> -
+                        <input type="number" id="hnd_max" name="hnd_max" min="1" max="50" value="{{ request.form.get('hnd_max', 50) }}">
                     </td>
                     <td>Hea</td>
                     <td>
-                        <input type="number" id="hea_min" name="hea_min" min="1" max="50" value="1"> - <input
-                            type="number" id="hea_max" name="hea_max" min="1" max="50" value="50">
+                        <input type="number" id="hea_min" name="hea_min" min="1" max="50" value="{{ request.form.get('hea_min', 1) }}"> -
+                        <input type="number" id="hea_max" name="hea_max" min="1" max="50" value="{{ request.form.get('hea_max', 50) }}">
                     </td>
                 </tr>
                 <tr>
                     <td>Lsh</td>
                     <td>
-                        <input type="number" id="lsh_min" name="lsh_min" min="1" max="50" value="1"> - <input
-                            type="number" id="lsh_max" name="lsh_max" min="1" max="50" value="50">
+                        <input type="number" id="lsh_min" name="lsh_min" min="1" max="50" value="{{ request.form.get('lsh_min', 1) }}"> -
+                        <input type="number" id="lsh_max" name="lsh_max" min="1" max="50" value="{{ request.form.get('lsh_max', 50) }}">
                     </td>
                     <td>Psn</td>
                     <td>
-                        <input type="number" id="psn_min" name="psn_min" min="1" max="50" value="1"> - <input
-                            type="number" id="psn_max" name="psn_max" min="1" max="50" value="50">
+                        <input type="number" id="psn_min" name="psn_min" min="1" max="50" value="{{ request.form.get('psn_min', 1) }}"> -
+                        <input type="number" id="psn_max" name="psn_max" min="1" max="50" value="{{ request.form.get('psn_max', 50) }}">
                     </td>
                     <td>Str</td>
                     <td>
-                        <input type="number" id="str_min" name="str_min" min="1" max="50" value="1"> - <input
-                            type="number" id="str_max" name="str_max" min="1" max="50" value="50">
+                        <input type="number" id="str_min" name="str_min" min="1" max="50" value="{{ request.form.get('str_min', 1) }}"> -
+                        <input type="number" id="str_max" name="str_max" min="1" max="50" value="{{ request.form.get('str_max', 50) }}">
                     </td>
                 </tr>
                 <tr>
                     <td>Com</td>
                     <td>
-                        <input type="number" id="com_min" name="com_min" min="1" max="50" value="1"> - <input
-                            type="number" id="com_max" name="com_max" min="1" max="50" value="50">
+                        <input type="number" id="com_min" name="com_min" min="1" max="50" value="{{ request.form.get('com_min', 1) }}"> -
+                        <input type="number" id="com_max" name="com_max" min="1" max="50" value="{{ request.form.get('com_max', 50) }}">
                     </td>
                     <td>Crs</td>
                     <td>
-                        <input type="number" id="crs_min" name="crs_min" min="1" max="50" value="1"> - <input
-                            type="number" id="crs_max" name="crs_max" min="1" max="50" value="50">
+                        <input type="number" id="crs_min" name="crs_min" min="1" max="50" value="{{ request.form.get('crs_min', 1) }}"> -
+                        <input type="number" id="crs_max" name="crs_max" min="1" max="50" value="{{ request.form.get('crs_max', 50) }}">
                     </td>
                     <td>Fto</td>
                     <td>
-                        <input type="number" id="fto_min" name="fto_min" min="1" max="50" value="1"> - <input
-                            type="number" id="fto_max" name="fto_max" min="1" max="50" value="50">
+                        <input type="number" id="fto_min" name="fto_min" min="1" max="50" value="{{ request.form.get('fto_min', 1) }}"> -
+                        <input type="number" id="fto_max" name="fto_max" min="1" max="50" value="{{ request.form.get('fto_max', 50) }}">
                     </td>
                 </tr>
                 <tr>
                     <td>Agg</td>
                     <td>
-                        <input type="number" id="agg_min" name="agg_min" min="1" max="50" value="1"> - <input
-                            type="number" id="agg_max" name="agg_max" min="1" max="50" value="50">
+                        <input type="number" id="agg_min" name="agg_min" min="1" max="50" value="{{ request.form.get('agg_min', 1) }}"> -
+                        <input type="number" id="agg_max" name="agg_max" min="1" max="50" value="{{ request.form.get('agg_max', 50) }}">
                     </td>
                     <td>Inf</td>
                     <td>
-                        <input type="number" id="inf_min" name="inf_min" min="1" max="50" value="1"> - <input
-                            type="number" id="inf_max" name="inf_max" min="1" max="50" value="50">
+                        <input type="number" id="inf_min" name="inf_min" min="1" max="50" value="{{ request.form.get('inf_min', 1) }}"> -
+                        <input type="number" id="inf_max" name="inf_max" min="1" max="50" value="{{ request.form.get('inf_max', 50) }}">
                     </td>
                     <td>Ecc</td>
                     <td>
-                        <input type="number" id="ecc_min" name="ecc_min" min="1" max="50" value="1"> - <input
-                            type="number" id="ecc_max" name="ecc_max" min="1" max="50" value="50">
+                        <input type="number" id="ecc_min" name="ecc_min" min="1" max="50" value="{{ request.form.get('ecc_min', 1) }}"> -
+                        <input type="number" id="ecc_max" name="ecc_max" min="1" max="50" value="{{ request.form.get('ecc_max', 50) }}">
                     </td>
                 </tr>
             </tbody>
         </table>
-        <input type="submit" value="Enviar">
+        <input type="submit" value="Submit">
     </form>
     {% if error %}
     <p style="color:red;">
@@ -258,18 +258,18 @@
     </p>
     {% endif %}
     {% if resultados %}
-    <h2>Resultados:</h2>
-    <button id="export-csv">Exportar CSV</button>
-    <button id="export-json">Exportar JSON</button>
+    <h2>Result:</h2>
+    <button id="export-csv">Export to CSV</button>
+    <button id="export-json">Export to JSON</button>
     <table id="tabela-resultados" border="1">
         <thead>
             <tr>
                 <th>ID</th>
                 <th>Club ID</th>
-                <th>Nome</th>
-                <th>Posição</th>
-                <th>Nacionalidade</th>
-                <th>Idade</th>
+                <th>Name</th>
+                <th>Position</th>
+                <th>Nationality</th>
+                <th>Age</th>
                 <th>Rating</th>
                 <th>OPS</th>
             </tr>
@@ -300,15 +300,15 @@
                     [6, "desc"]
                 ],
                 "language": {
-                    "lengthMenu": "Mostrar _MENU_ registros por página",
-                    "zeroRecords": "Nenhum registro encontrado",
-                    "info": "Mostrando página _PAGE_ de _PAGES_",
-                    "infoEmpty": "Nenhum registro disponível",
-                    "infoFiltered": "(filtrado de _MAX_ total de registros)",
-                    "search": "Pesquisar:",
+                    "lengthMenu": "Show _MENU_ records per page",
+                    "zeroRecords": "No records found",
+                    "info": "Showing page _PAGE_ of _PAGES_",
+                    "infoEmpty": "No records available",
+                    "infoFiltered": "(filtered from _MAX_ total records)",
+                    "search": "Search:",
                     "paginate": {
-                        "next": "Próximo",
-                        "previous": "Anterior"
+                        "next": "Next",
+                        "previous": "Previous"
                     }
                 }
             });
